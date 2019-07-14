@@ -529,6 +529,7 @@ class _LoginPageState extends State<LoginPage>
                       ),
                     ),
                     onPressed: () => showInSnackBar("SignUp button pressed")),
+                    
               ),
             ],
           ),
