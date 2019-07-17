@@ -41,7 +41,6 @@ class _LoginPageState extends State<LoginPage>
   Widget build(BuildContext context) {
     return new Scaffold(
       key: _scaffoldKey,
-      
       body: NotificationListener<OverscrollIndicatorNotification>(
         onNotification: (overscroll) {
           overscroll.disallowGlow();
@@ -49,7 +48,7 @@ class _LoginPageState extends State<LoginPage>
         child: SingleChildScrollView(
           child: Container(
             width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height ,
+            height: MediaQuery.of(context).size.height,
             decoration: new BoxDecoration(
               gradient: new LinearGradient(
                   colors: [
@@ -346,224 +345,196 @@ class _LoginPageState extends State<LoginPage>
     );
   }
 
+
+// sign up page entire design
   Widget _buildSignUp(BuildContext context) {
     return SingleChildScrollView(
-      padding: EdgeInsets.only(left: 30.0,right: 30.0),
+      padding: EdgeInsets.only(left: 30.0, right: 30.0),
       controller: new ScrollController(),
       child: new Card(
-      elevation: 2.0,
-      color: Colors.white,
-                shape: RoundedRectangleBorder(
-      borderRadius: BorderRadius.circular(8.0),
+        elevation: 2.0,
+        color: Colors.white,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(8.0),
+        ),
+        child: new Column(
+          children: <Widget>[
+
+            //input field sign up name
+            Padding(
+              padding: EdgeInsets.only(
+                  top: 20.0, bottom: 20.0, left: 25.0, right: 25.0),
+              child: TextField(
+                focusNode: myFocusNodeName,
+                controller: signupNameController,
+                keyboardType: TextInputType.text,
+                textCapitalization: TextCapitalization.words,
+                style: TextStyle(fontSize: 16.0, color: Colors.black),
+                decoration: InputDecoration(
+                  border: InputBorder.none,
+                  icon: Icon(
+                    FontAwesomeIcons.user,
+                    color: Colors.black,
+                  ),
+                  hintText: "Name",
+                  hintStyle: TextStyle(fontSize: 16.0),
                 ),
-                      child: new Column(
-            children: <Widget>[
-      
-      Padding(
-          padding: EdgeInsets.only(
-              top: 20.0, bottom: 20.0, left: 25.0, right: 25.0),
-          child: TextField(
-            focusNode: myFocusNodeName,
-            controller: signupNameController,
-            keyboardType: TextInputType.text,
-            textCapitalization: TextCapitalization.words,
-            style: TextStyle(fontSize: 16.0, color: Colors.black),
-            decoration: InputDecoration(
-              border: InputBorder.none,
-              icon: Icon(
-      FontAwesomeIcons.user,
-      color: Colors.black,
-              ),
-              hintText: "Name",
-              hintStyle: TextStyle(fontSize: 16.0),
-            ),
-          ),
-      ),
-      Container(
-          width: 250.0,
-          height: 1.0,
-          color: Colors.grey[400],
-      ),
-      Padding(
-          padding: EdgeInsets.only(
-              top: 20.0, bottom: 20.0, left: 25.0, right: 25.0),
-          child: TextField(
-            focusNode: myFocusNodeEmail,
-            controller: signupEmailController,
-            keyboardType: TextInputType.emailAddress,
-            style: TextStyle(fontSize: 16.0, color: Colors.black),
-            decoration: InputDecoration(
-              border: InputBorder.none,
-              icon: Icon(
-      FontAwesomeIcons.envelope,
-      color: Colors.black,
-              ),
-              hintText: "Email Address",
-              hintStyle: TextStyle(fontSize: 16.0),
-            ),
-          ),
-      ),
-      Container(
-          width: 250.0,
-          height: 1.0,
-          color: Colors.grey[400],
-      ),
-      Padding(
-          padding: EdgeInsets.only(
-              top: 20.0, bottom: 20.0, left: 25.0, right: 25.0),
-          child: TextField(
-            focusNode: myFocusNodePassword,
-            controller: signupPasswordController,
-            obscureText:
-      Provider.of<AppState>(context).obscureTextSignup,
-            style: TextStyle(fontSize: 16.0, color: Colors.black),
-            decoration: InputDecoration(
-              border: InputBorder.none,
-              icon: Icon(
-      FontAwesomeIcons.lock,
-      color: Colors.black,
-              ),
-              hintText: "Password",
-              hintStyle: TextStyle(fontSize: 16.0),
-              suffixIcon: GestureDetector(
-      onTap: () => _toggleSignup(context),
-      child: Icon(
-        Provider.of<AppState>(context).obscureTextSignup
-            ? FontAwesomeIcons.eye
-            : FontAwesomeIcons.eyeSlash,
-        size: 15.0,
-        color: Colors.black,
-      ),
               ),
             ),
-          ),
-      ),
-      Container(
-          width: 250.0,
-          height: 1.0,
-          color: Colors.grey[400],
-      ),
-      Padding(
-          padding: EdgeInsets.only(
-              top: 20.0, bottom: 20.0, left: 25.0, right: 25.0),
-          child: TextField(
-            controller: signupConfirmPasswordController,
-            obscureText: Provider.of<AppState>(context)
-      .obscureTextSignupConfirm,
-            style: TextStyle(fontSize: 16.0, color: Colors.black),
-            decoration: InputDecoration(
-              border: InputBorder.none,
-              icon: Icon(
-      FontAwesomeIcons.lock,
-      color: Colors.black,
-              ),
-              hintText: "Confirmation",
-              hintStyle: TextStyle(fontSize: 16.0),
-              suffixIcon: GestureDetector(
-      onTap: () => _toggleSignupConfirm(context),
-      child: Icon(
-        Provider.of<AppState>(context)
-          .obscureTextSignupConfirm
-            ? FontAwesomeIcons.eye
-            : FontAwesomeIcons.eyeSlash,
-        size: 15.0,
-        color: Colors.black,
-      ),
-              ),
+
+            Container(
+              width: 250.0,
+              height: 1.0,
+              color: Colors.grey[400],
             ),
-          ),
-      ),
-      Container(
-          width: 250.0,
-          height: 1.0,
-          color: Colors.grey[400],
-      ),
 
-        Padding(
-          padding: EdgeInsets.only(
-              top: 20.0, bottom: 20.0, left: 25.0, right: 25.0),
-          child: TextField(
-            controller: signupConfirmPasswordController,
-            obscureText: Provider.of<AppState>(context)
-      .obscureTextSignupConfirm,
-            style: TextStyle(fontSize: 16.0, color: Colors.black),
-            decoration: InputDecoration(
-              border: InputBorder.none,
-              icon: Icon(
-      FontAwesomeIcons.lock,
-      color: Colors.black,
-              ),
-              hintText: "Confirmation",
-              hintStyle: TextStyle(fontSize: 16.0),
-              suffixIcon: GestureDetector(
-      onTap: () => _toggleSignupConfirm(context),
-      child: Icon(
-        Provider.of<AppState>(context)
-          .obscureTextSignupConfirm
-            ? FontAwesomeIcons.eye
-            : FontAwesomeIcons.eyeSlash,
-        size: 15.0,
-        color: Colors.black,
-      ),
-              ),
-            ),
-          ),
-      ),
-
-
-
-
-
-
-Container(
-             
-                decoration: new BoxDecoration(
-                  borderRadius: BorderRadius.all(Radius.circular(5.0)),
-                  boxShadow: <BoxShadow>[
-                    BoxShadow(
-                      color: themeas.Colors.loginGradientStart,
-                      offset: Offset(1.0, 6.0),
-                      blurRadius: 20.0,
-                    ),
-                    BoxShadow(
-                      color: themeas.Colors.loginGradientEnd,
-                      offset: Offset(1.0, 6.0),
-                      blurRadius: 20.0,
-                    ),
-                  ],
-                  gradient: new LinearGradient(
-                      colors: [
-                        themeas.Colors.loginGradientEnd,
-                        themeas.Colors.loginGradientStart
-                      ],
-                      begin: const FractionalOffset(0.2, 0.2),
-                      end: const FractionalOffset(1.0, 1.0),
-                      stops: [0.0, 1.0],
-                      tileMode: TileMode.clamp),
+            //input field sign up email
+            Padding(
+              padding: EdgeInsets.only(
+                  top: 20.0, bottom: 20.0, left: 25.0, right: 25.0),
+              child: TextField(
+                focusNode: myFocusNodeEmail,
+                controller: signupEmailController,
+                keyboardType: TextInputType.emailAddress,
+                style: TextStyle(fontSize: 16.0, color: Colors.black),
+                decoration: InputDecoration(
+                  border: InputBorder.none,
+                  icon: Icon(
+                    FontAwesomeIcons.envelope,
+                    color: Colors.black,
+                  ),
+                  hintText: "Email Address",
+                  hintStyle: TextStyle(fontSize: 16.0),
                 ),
-                child: MaterialButton(
-                    highlightColor: Colors.transparent,
-                    splashColor: themeas.Colors.loginGradientEnd,
-                    //shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(5.0))),
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 10.0, horizontal: 42.0),
-                      child: Text(
-                        "SIGN UP",
-                        style: TextStyle(color: Colors.white, fontSize: 25.0),
-                      ),
+              ),
+            ),
+            Container(
+              width: 250.0,
+              height: 1.0,
+              color: Colors.grey[400],
+            ),
+
+             //input field sign up password
+            Padding(
+              padding: EdgeInsets.only(
+                  top: 20.0, bottom: 20.0, left: 25.0, right: 25.0),
+              child: TextField(
+                focusNode: myFocusNodePassword,
+                controller: signupPasswordController,
+                obscureText: Provider.of<AppState>(context).obscureTextSignup,//calling values of provider
+                style: TextStyle(fontSize: 16.0, color: Colors.black),
+                decoration: InputDecoration(
+                  border: InputBorder.none,
+                  icon: Icon(
+                    FontAwesomeIcons.lock,
+                    color: Colors.black,
+                  ),
+                  hintText: "Password",
+                  hintStyle: TextStyle(fontSize: 16.0),
+                  suffixIcon: GestureDetector(
+                    onTap: () => _toggleSignup(context),
+                    child: Icon(
+                      Provider.of<AppState>(context).obscureTextSignup//calling values of provider
+                          ? FontAwesomeIcons.eye
+                          : FontAwesomeIcons.eyeSlash,
+                      size: 15.0,
+                      color: Colors.black,
                     ),
-                    onPressed: () => showInSnackBar("SignUp button pressed")),
-                    
-              )  
-            ],
-          ),
-
-
-          
-          
+                  ),
                 ),
+              ),
+            ),
 
+
+
+            Container(
+              width: 250.0,
+              height: 1.0,
+              color: Colors.grey[400],
+            ),
+
+             //input field sign up password confirm
+            Padding(
+              padding: EdgeInsets.only(
+                  top: 20.0, bottom: 20.0, left: 25.0, right: 25.0),
+              child: TextField(
+                controller: signupConfirmPasswordController,
+                obscureText:
+                    Provider.of<AppState>(context).obscureTextSignupConfirm,//calling values of provider
+                style: TextStyle(fontSize: 16.0, color: Colors.black),
+                decoration: InputDecoration(
+                  border: InputBorder.none,
+                  icon: Icon(
+                    FontAwesomeIcons.lock,
+                    color: Colors.black,
+                  ),
+                  hintText: "Confirmation",
+                  hintStyle: TextStyle(fontSize: 16.0),
+                  suffixIcon: GestureDetector(
+                    onTap: () => _toggleSignupConfirm(context),
+                    child: Icon(
+                      Provider.of<AppState>(context).obscureTextSignupConfirm//calling values of provider
+                          ? FontAwesomeIcons.eye
+                          : FontAwesomeIcons.eyeSlash,
+                      size: 15.0,
+                      color: Colors.black,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            Container(
+              width: 250.0,
+              height: 1.0,
+              color: Colors.grey[400],
+            ),
+
+
+
+
+            //button design of sign up
+            Container(
+              decoration: new BoxDecoration(
+                borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                boxShadow: <BoxShadow>[
+                  BoxShadow(
+                    color: themeas.Colors.loginGradientStart,
+                    offset: Offset(1.0, 6.0),
+                    blurRadius: 20.0,
+                  ),
+                  BoxShadow(
+                    color: themeas.Colors.loginGradientEnd,
+                    offset: Offset(1.0, 6.0),
+                    blurRadius: 20.0,
+                  ),
+                ],
+                gradient: new LinearGradient(
+                    colors: [
+                      themeas.Colors.loginGradientEnd,
+                      themeas.Colors.loginGradientStart
+                    ],
+                    begin: const FractionalOffset(0.2, 0.2),
+                    end: const FractionalOffset(1.0, 1.0),
+                    stops: [0.0, 1.0],
+                    tileMode: TileMode.clamp),
+              ),
+              child: MaterialButton(
+                  highlightColor: Colors.transparent,
+                  splashColor: themeas.Colors.loginGradientEnd,
+                  //shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(5.0))),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 10.0, horizontal: 42.0),
+                    child: Text(
+                      "SIGN UP",
+                      style: TextStyle(color: Colors.white, fontSize: 25.0),
+                    ),
+                  ),
+                  onPressed: () => showInSnackBar("SignUp button pressed")),
+            )
+          ],
+        ),
+      ),
     );
   }
 
