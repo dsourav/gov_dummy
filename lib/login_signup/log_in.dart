@@ -17,6 +17,9 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage>
     with SingleTickerProviderStateMixin {
+
+
+
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
 
   final FocusNode myFocusNodeEmailLogin = FocusNode();
@@ -24,18 +27,61 @@ class _LoginPageState extends State<LoginPage>
 
   final FocusNode myFocusNodePassword = FocusNode();
   final FocusNode myFocusNodeEmail = FocusNode();
-  final FocusNode myFocusNodeName = FocusNode();
+  final FocusNode myFocusNodeName = FocusNode();//full name
+  final FocusNode myFocusNodeUserName = FocusNode();
+  final FocusNode myFocusNodePhone = FocusNode();
+  final FocusNode myFocusNodeAddress = FocusNode();
+
 
   TextEditingController loginEmailController = new TextEditingController();
   TextEditingController loginPasswordController = new TextEditingController();
 
   TextEditingController signupEmailController = new TextEditingController();
+  TextEditingController signupUserNameController = new TextEditingController();//full name
   TextEditingController signupNameController = new TextEditingController();
   TextEditingController signupPasswordController = new TextEditingController();
   TextEditingController signupConfirmPasswordController =
       new TextEditingController();
+  TextEditingController signupPhoneController = new TextEditingController();
+  TextEditingController signupAddressController = new TextEditingController();
 
   PageController _pageController;
+
+
+
+
+  //dropdown section intializer
+
+  List<String>itemsRegion=[
+                'All of Barishal',
+                'Patuakhali',
+                'Jhalokati',
+                'Bhola',
+                'Pirojpur',
+                'Barguna',
+                
+   ];
+
+   List<String>itemsBdAll=[
+                'Barishal',
+                'Chattogram',
+                'Dhaka',
+                'Khulna',
+                'Mymensingh',
+                'Rajshahi',
+                'Rangpur',
+                'Sylhet'
+   ];
+  String dropdownvalue = 'Barishal';
+  String dropDownvalue2 = 'All of Barishal';
+
+//end of dropdown section
+
+
+
+
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -114,8 +160,13 @@ class _LoginPageState extends State<LoginPage>
   void dispose() {
     myFocusNodePassword.dispose();
     myFocusNodeEmail.dispose();
-    myFocusNodeName.dispose();
+    myFocusNodeName.dispose();//full name
+    myFocusNodeAddress.dispose();
+    myFocusNodePhone.dispose();
+    myFocusNodeUserName.dispose();
     _pageController?.dispose();
+
+
     super.dispose();
   }
 
@@ -345,7 +396,6 @@ class _LoginPageState extends State<LoginPage>
     );
   }
 
-
 // sign up page entire design
   Widget _buildSignUp(BuildContext context) {
     return SingleChildScrollView(
@@ -359,8 +409,7 @@ class _LoginPageState extends State<LoginPage>
         ),
         child: new Column(
           children: <Widget>[
-
-            //input field sign up name
+            //input field sign up full name
             Padding(
               padding: EdgeInsets.only(
                   top: 20.0, bottom: 20.0, left: 25.0, right: 25.0),
@@ -376,7 +425,7 @@ class _LoginPageState extends State<LoginPage>
                     FontAwesomeIcons.user,
                     color: Colors.black,
                   ),
-                  hintText: "Name",
+                  hintText: "Full Name",
                   hintStyle: TextStyle(fontSize: 16.0),
                 ),
               ),
@@ -387,6 +436,38 @@ class _LoginPageState extends State<LoginPage>
               height: 1.0,
               color: Colors.grey[400],
             ),
+
+            //input field sign up user name
+            Padding(
+              padding: EdgeInsets.only(
+                  top: 20.0, bottom: 20.0, left: 25.0, right: 25.0),
+              child: TextField(
+                focusNode: myFocusNodeUserName,
+                controller: signupUserNameController,
+                keyboardType: TextInputType.text,
+                textCapitalization: TextCapitalization.words,
+                style: TextStyle(fontSize: 16.0, color: Colors.black),
+                decoration: InputDecoration(
+                  border: InputBorder.none,
+                  icon: Icon(
+                    FontAwesomeIcons.user,
+                    color: Colors.black,
+                  ),
+                  hintText: "User Name",
+                  hintStyle: TextStyle(fontSize: 16.0),
+                ),
+              ),
+            ),
+
+            Container(
+              width: 250.0,
+              height: 1.0,
+              color: Colors.grey[400],
+            ),
+
+
+
+            
 
             //input field sign up email
             Padding(
@@ -414,14 +495,180 @@ class _LoginPageState extends State<LoginPage>
               color: Colors.grey[400],
             ),
 
-             //input field sign up password
+             //input field sign up phone
+
+Padding(
+              padding: EdgeInsets.only(
+                  top: 20.0, bottom: 20.0, left: 25.0, right: 25.0),
+              child: TextField(
+                focusNode: myFocusNodePhone,
+                controller: signupPhoneController,
+                keyboardType: TextInputType.phone,
+                style: TextStyle(fontSize: 16.0, color: Colors.black),
+                decoration: InputDecoration(
+                  border: InputBorder.none,
+                  icon: Icon(
+                    FontAwesomeIcons.phone,
+                    color: Colors.black,
+                  ),
+                  hintText: "Phone Number",
+                  hintStyle: TextStyle(fontSize: 16.0),
+                ),
+              ),
+            ),
+
+            Container(
+              width: 250.0,
+              height: 1.0,
+              color: Colors.grey[400],
+            ),
+
+            //input field sign up address
+Padding(
+              padding: EdgeInsets.only(
+                  top: 20.0, bottom: 20.0, left: 25.0, right: 25.0),
+              child: TextField(
+                focusNode: myFocusNodeAddress,
+                controller: signupAddressController,
+                keyboardType: TextInputType.text,
+                style: TextStyle(fontSize: 16.0, color: Colors.black),
+                decoration: InputDecoration(
+                  border: InputBorder.none,
+                  icon: Icon(
+                    FontAwesomeIcons.addressBook,
+                    color: Colors.black,
+                  ),
+                  hintText: "Address ",
+                  hintStyle: TextStyle(fontSize: 16.0),
+                ),
+              ),
+            ),
+
+         
+           Container(
+              width: 250.0,
+              height: 1.0,
+              color: Colors.grey[400],
+            ),
+
+
+            new SizedBox(
+              height: 10.0,
+            ),
+  
+      //input field dropdown text
+         new Container(child: new Text("Select Division & Region"
+         ,style: new TextStyle(
+           color: Colors.black87,
+           fontSize: 16.0
+         ),
+         textAlign: TextAlign.start,)),
+
+         //input field dropdown design data
+         new Container(
+           margin: EdgeInsets.only(left: 20.0,right: 20.0),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: <Widget>[
+            new DropdownButton<String>(
+              value: dropdownvalue,
+              items: itemsBdAll.map<DropdownMenuItem<String>>((String value) {
+                return DropdownMenuItem<String>(
+                    child:new Text(value),
+                     value: value);
+              }).toList(),
+              onChanged: (value) {
+
+                if(value.toString()=='Barishal'){
+                  itemsRegion=['All of Barishal','Patuakhali','Jhalokati','Bhola','Pirojpur','Barguna'];
+                  dropDownvalue2='All of Barishal';
+                }
+
+
+                if(value.toString()=='Chattogram'){
+                  itemsRegion=['All of Chattogram','Agrabad','Nasirabad','Kotwali','Halishahar','Chawkbazar'];
+                  dropDownvalue2='All of Chattogram';
+                }
+
+                if(value.toString()=='Dhaka'){
+                  itemsRegion=['All of Dhaka','Mirpur','Uttara','Dhanmondi','Gulshan','Mohammadpur'];
+                  dropDownvalue2='All of Dhaka';
+                }
+
+                if(value.toString()=='Khulna'){
+                  itemsRegion=['All of Khulna','Khulna Sadar','Sonadanga','Khalishpur','Daulatpur','Rupsa'];
+                  dropDownvalue2='All of Khulna';
+                }
+
+                if(value.toString()=='Mymensingh'){
+                  itemsRegion=['All of Mymensingh','Ganginar par','Chorpara','Town Hall','Valuka','Kewatkhali'];
+                  dropDownvalue2='All of Mymensingh';
+                }
+
+                if(value.toString()=='Rajshahi'){
+                  itemsRegion=['All of Rajshahi','Shaheb Bazar','Shiroil','New Market','Motihar','Uposahar'];
+                  dropDownvalue2='All of Rajshahi';
+                }
+
+                if(value.toString()=='Rangpur'){
+                  itemsRegion=['All of Rangpur','Jahaj Company More','Dhap','Shapla Chottor','Lalbag Mor','Pourobazar'];
+                  dropDownvalue2='All of Rangpur';
+                }
+                
+                if(value.toString()=='Sylhet'){
+                  itemsRegion=['All of Sylhet','Zinda Bazar','Bandar Bazar','Amber Khana','South Surma','Uposhohor'];
+                  dropDownvalue2='All of Sylhet';
+                }
+                setState(() {
+                  dropdownvalue = value;
+                });
+                print(dropdownvalue);
+              },
+              
+            ),
+
+
+            new DropdownButton(
+              value: dropDownvalue2,
+              items: itemsRegion.map<DropdownMenuItem<String>>((String value){
+
+                return new DropdownMenuItem(
+                  child: new Text(value),
+                  value: value,
+
+                );
+
+              }).toList(),
+               onChanged: (value) {
+                 setState(() {
+                 dropDownvalue2=value;  
+                 });
+                 print(dropDownvalue2);
+
+               },)
+          
+            
+         
+          ],
+        ),
+      ),
+
+
+            Container(
+              width: 250.0,
+              height: 1.0,
+              color: Colors.grey[400],
+            ),
+
+            //input field sign up password
             Padding(
               padding: EdgeInsets.only(
                   top: 20.0, bottom: 20.0, left: 25.0, right: 25.0),
               child: TextField(
                 focusNode: myFocusNodePassword,
                 controller: signupPasswordController,
-                obscureText: Provider.of<AppState>(context).obscureTextSignup,//calling values of provider
+                obscureText: Provider.of<AppState>(context)
+                    .obscureTextSignup, //calling values of provider
                 style: TextStyle(fontSize: 16.0, color: Colors.black),
                 decoration: InputDecoration(
                   border: InputBorder.none,
@@ -434,7 +681,8 @@ class _LoginPageState extends State<LoginPage>
                   suffixIcon: GestureDetector(
                     onTap: () => _toggleSignup(context),
                     child: Icon(
-                      Provider.of<AppState>(context).obscureTextSignup//calling values of provider
+                      Provider.of<AppState>(context)
+                              .obscureTextSignup //calling values of provider
                           ? FontAwesomeIcons.eye
                           : FontAwesomeIcons.eyeSlash,
                       size: 15.0,
@@ -445,22 +693,20 @@ class _LoginPageState extends State<LoginPage>
               ),
             ),
 
-
-
             Container(
               width: 250.0,
               height: 1.0,
               color: Colors.grey[400],
             ),
 
-             //input field sign up password confirm
+            //input field sign up password confirm
             Padding(
               padding: EdgeInsets.only(
                   top: 20.0, bottom: 20.0, left: 25.0, right: 25.0),
               child: TextField(
                 controller: signupConfirmPasswordController,
-                obscureText:
-                    Provider.of<AppState>(context).obscureTextSignupConfirm,//calling values of provider
+                obscureText: Provider.of<AppState>(context)
+                    .obscureTextSignupConfirm, //calling values of provider
                 style: TextStyle(fontSize: 16.0, color: Colors.black),
                 decoration: InputDecoration(
                   border: InputBorder.none,
@@ -473,7 +719,8 @@ class _LoginPageState extends State<LoginPage>
                   suffixIcon: GestureDetector(
                     onTap: () => _toggleSignupConfirm(context),
                     child: Icon(
-                      Provider.of<AppState>(context).obscureTextSignupConfirm//calling values of provider
+                      Provider.of<AppState>(context)
+                              .obscureTextSignupConfirm //calling values of provider
                           ? FontAwesomeIcons.eye
                           : FontAwesomeIcons.eyeSlash,
                       size: 15.0,
@@ -488,9 +735,6 @@ class _LoginPageState extends State<LoginPage>
               height: 1.0,
               color: Colors.grey[400],
             ),
-
-
-
 
             //button design of sign up
             Container(
@@ -562,5 +806,11 @@ class _LoginPageState extends State<LoginPage>
   void _toggleSignupConfirm(BuildContext context) {
     final apstateData = Provider.of<AppState>(context);
     apstateData.obsecureSignupConfirm();
+  }
+
+
+//drop down part design data
+  Widget _dropDownSection(){
+      
   }
 }
