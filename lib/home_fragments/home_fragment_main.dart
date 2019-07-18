@@ -13,6 +13,6 @@ class HomeFragmentMain extends StatefulWidget {
 class _HomeFragmentMainState extends State<HomeFragmentMain> {
   @override
   Widget build(BuildContext context) {
-    return null;
+    return new Container();
   }
 }
