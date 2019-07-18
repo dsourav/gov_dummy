@@ -29,6 +29,7 @@ dependencies:
   flushbar: ^1.7.0
   connectivity: ^0.4.3+4
   graphql_flutter: ^1.0.0
+  progress_dialog: ^1.1.0+1
   flare_flutter:
     git: 
       url: git://github.com/2d-inc/Flare-Flutter.git

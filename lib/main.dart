@@ -1,6 +1,8 @@
 
+import 'package:design_demo/graphql/graphql_object1.dart';
 import 'package:design_demo/model.dart';
 import 'package:flutter/material.dart';
+import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:provider/provider.dart';
 
 import 'login_signup/log_in.dart';
@@ -15,16 +17,19 @@ class MyApp extends StatelessWidget {
   
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home:new ChangeNotifierProvider(
-        builder: (BuildContext context) =>AppState(true,true,true,Colors.black,Colors.white),
-        child: new LoginPage(),
+    return GraphQLProvider(
+         client: graphQLObject.client,
+          child: MaterialApp(
+        title: 'Flutter Demo',
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
+        ),
+        home:new ChangeNotifierProvider(
+          builder: (BuildContext context) =>AppState(true,true,true,Colors.black,Colors.white),
+          child: new LoginPage(),
 
-      )
+        )
+      ),
     );
   }
 }
