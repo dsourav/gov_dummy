@@ -14,6 +14,7 @@ import 'utils/bubble_indication_painter.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:design_demo/global_variable/global query.dart' as globals;
 import 'package:progress_dialog/progress_dialog.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 
 
@@ -40,35 +41,6 @@ class _LoginPageState extends State<LoginPage>
 //end of connectivity intializer
 
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
-String signUpQueryMutation=
-"""mutation signuprun(\$full_name: String!,
-\$user_name: String!,
-\$email: String!,
-\$phone: String!,
-\$password: String!,
-\$division: String!,
-\$region: String!,
-\$address: String!){
-  signUp(data:{
-    full_name:\$full_name
-    user_name:\$user_name,
-        email:\$email,
-        phone:\$phone,
-        password:\$password,
-        division:\$division,
-        region:\$region,
-        address:\$address
-    
-  }){
-    token
-  }
-}
-""";
-
-
-
-
-
 
   final _formKey = GlobalKey<FormState>();
   final _formKey2 = GlobalKey<FormState>();
@@ -770,7 +742,7 @@ String signUpQueryMutation=
                       }).toList(),
                       onChanged: (value) {
                         setState(() {
-                          //dropDownvalue2=value;
+                          dropDownvalue2=value;
                         });
                         // print(dropDownvalue2);
                       },
@@ -904,7 +876,7 @@ String signUpQueryMutation=
                             'address': signupAddressController.text
                             
                           });
-                          print("run mutation");
+                          //print("run mutation");
                           //showInSnackBar("SignUp button pressed");
 
                           //_pr.show();
@@ -912,7 +884,7 @@ String signUpQueryMutation=
                       });
                 },
                 options:
-                    MutationOptions(document: signUpQueryMutation),
+                    MutationOptions(document: globals.signUpQueryMutation),
                 update: (Cache cache, QueryResult result) {
                   print("update called");
                   //print(signup)
@@ -921,8 +893,19 @@ String signUpQueryMutation=
                     showInSnackBar(result.errors.toString());
                   } else if (result.data['signUp']['token'] != null) {
                    // _pr.hide();
-                    print(result.data['signUp']['token']);
-                    showInSnackBar(result.data['signUp']['token']);
+                   // print(result.data['signUp']['token']);
+                    //globals.setToken(result.data['signUp']['token']);
+                    _setToken(result.data['signUp']['token']);
+                   
+                      //print(globals.getToken().toString());
+                     Navigator.push(context, new MaterialPageRoute(
+                                  builder: (BuildContext context) {
+                                return new HomePAgeMAin();
+                              })); 
+                    
+                    //showInSnackBar(result.data['signUp']['token']);
+                     
+                    
                   } else
                     //_pr.hide();
                   showInSnackBar("wrong Happened");
@@ -933,6 +916,13 @@ String signUpQueryMutation=
         ),
       ),
     );
+  }
+  _setToken(String tvalue)async{
+    await SharedPreferences.getInstance().then((value){
+      value.setString('token', tvalue);
+      //print(tvalue);
+    });
+
   }
 
 //end of sign up page design

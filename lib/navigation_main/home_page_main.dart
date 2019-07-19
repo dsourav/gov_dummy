@@ -2,13 +2,15 @@ import 'package:connectivity/connectivity.dart';
 import 'package:design_demo/cart_fragments/cart_fragment_main.dart';
 import 'package:design_demo/feedback_fragments/feedback_main.dart';
 import 'package:design_demo/home_fragments/home_fragment_main.dart';
+import 'package:design_demo/login_signup/log_in.dart';
 import 'package:design_demo/my_oreders_fragment/me_order_fragment_main.dart';
 import 'package:design_demo/profile_fragments/profile_main.dart';
 import 'package:design_demo/transaction_history_fragments/transact_history_main.dart';
 import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/material.dart';
-
+import 'package:design_demo/global_variable/global query.dart' as globals;
 import 'package:flutter_offline/flutter_offline.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class DrawerItem {
   String title;
@@ -31,6 +33,7 @@ class HomePAgeMAin extends StatefulWidget {
 }
 
 class _HomePAgeMAinState extends State<HomePAgeMAin> {
+  var token;
   int _selectedDrawerIndex = 0;
   bool state = false;
   bool connected = true;
@@ -40,18 +43,17 @@ class _HomePAgeMAinState extends State<HomePAgeMAin> {
     var connectivityResult = await (Connectivity().checkConnectivity());
     if (connectivityResult == ConnectivityResult.mobile) {
       setState(() {
-        connected=true;
+        connected = true;
       });
       // I am connected to a mobile network.
     } else if (connectivityResult == ConnectivityResult.wifi) {
       // I am connected to a wifi network.
-     setState(() {
-       connected=true;
-     });
-    }
-    else{
       setState(() {
-        connected=false;
+        connected = true;
+      });
+    } else {
+      setState(() {
+        connected = false;
       });
     }
   }
@@ -91,12 +93,29 @@ class _HomePAgeMAinState extends State<HomePAgeMAin> {
   @override
   initState() {
     super.initState();
+    _getToken();
 
     subscription = Connectivity()
         .onConnectivityChanged
         .listen((ConnectivityResult result) {
       // Got a new connectivity status!
     });
+  }
+
+  _getToken() async {
+    await SharedPreferences.getInstance().then((onValue) {
+      token = onValue.getString('token') ?? null;
+      print(token.toString());
+    });
+  }
+  _romeToken()async{
+    if(token!=null){
+     await SharedPreferences.getInstance().then((val){
+       val.remove('token');
+    }); 
+    }
+    
+
   }
 
   @override
@@ -113,8 +132,23 @@ class _HomePAgeMAinState extends State<HomePAgeMAin> {
         onTap: () => _onSelectedItem(i),
       ));
     }
-    
+    drawerOptions.add(new ListTile(
+      leading: new Icon(Icons.power_settings_new),
+      title: new Text("Log Out"),
+      onTap: () {
+     _romeToken();
+        Navigator.push(
+            context,
+            new MaterialPageRoute(
+                builder: (BuildContext context) => new LoginPage()));
+      },
+    ));
+
     return new Scaffold(
+        floatingActionButton: new FloatingActionButton(
+          child: new Icon(Icons.power_settings_new),
+          onPressed: () => Navigator.of(context).pop(),
+        ),
         appBar: new AppBar(
           title: new Text(widget.draawerItems[_selectedDrawerIndex].title),
         ),
@@ -122,7 +156,9 @@ class _HomePAgeMAinState extends State<HomePAgeMAin> {
           child: new Column(
             children: <Widget>[
               new UserAccountsDrawerHeader(
-                accountName: new Text("sourav"),
+                accountName:
+                    token != null ? new Text("has toke") : new Text("no token"),
+                otherAccountsPictures: <Widget>[],
                 accountEmail: null,
                 currentAccountPicture: new CircleAvatar(
                   child: new Icon(Icons.person),
@@ -130,7 +166,7 @@ class _HomePAgeMAinState extends State<HomePAgeMAin> {
               ),
               new Column(
                 children: drawerOptions,
-              )
+              ),
             ],
           ),
         ),
@@ -144,7 +180,10 @@ class _HomePAgeMAinState extends State<HomePAgeMAin> {
               child: new Container(
                 color: Colors.red,
                 child: new Center(
-                  child: new Text("OFFLINE",style: new TextStyle(color: Colors.white),),
+                  child: new Text(
+                    "OFFLINE",
+                    style: new TextStyle(color: Colors.white),
+                  ),
                 ),
               ),
             ),

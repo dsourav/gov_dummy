@@ -30,6 +30,7 @@ dependencies:
   connectivity: ^0.4.3+4
   graphql_flutter: ^1.0.0
   progress_dialog: ^1.1.0+1
+  shared_preferences: ^0.5.3+4
   flare_flutter:
     git: 
       url: git://github.com/2d-inc/Flare-Flutter.git
