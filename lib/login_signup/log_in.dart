@@ -15,10 +15,8 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:design_demo/global_variable/global query.dart' as globals;
 import 'package:progress_dialog/progress_dialog.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
-
-
-
+import 'package:modal_progress_hud/modal_progress_hud.dart';
+import 'package:liquid_progress_indicator/liquid_progress_indicator.dart';
 
 class LoginPage extends StatefulWidget {
   LoginPage({Key key}) : super(key: key);
@@ -29,11 +27,14 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage>
     with SingleTickerProviderStateMixin {
- 
- GraphQLClient client;
+  GraphQLClient client;
   initMethod(context) {
     client = GraphQLProvider.of(context).value;
   }
+
+  //progress status
+  bool _loaderState = false;
+
 //connectivity initializer
   bool _connected = true;
   var _subscription;
@@ -71,7 +72,6 @@ class _LoginPageState extends State<LoginPage>
   PageController _pageController;
 
 //progress dialouge
-  ProgressDialog _pr;
 
   //dropdown section intializer
 
@@ -103,71 +103,89 @@ class _LoginPageState extends State<LoginPage>
   Widget build(BuildContext context) {
     _getConnectivityStatus();
     WidgetsBinding.instance.addPostFrameCallback((_) => initMethod(context));
-    
+
     return new Scaffold(
       key: _scaffoldKey,
-      body: NotificationListener<OverscrollIndicatorNotification>(
-        onNotification: (overscroll) {
-          overscroll.disallowGlow();
-        },
-        child: SingleChildScrollView(
-          child: Container(
-            width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height,
-            decoration: new BoxDecoration(
-              gradient: new LinearGradient(
-                  colors: [
-                    themeas.Colors.loginGradientStart,
-                    themeas.Colors.loginGradientEnd
-                  ],
-                  begin: const FractionalOffset(0.0, 0.0),
-                  end: const FractionalOffset(1.0, 1.0),
-                  stops: [0.0, 1.0],
-                  tileMode: TileMode.clamp),
-            ),
-            child: Column(
-              mainAxisSize: MainAxisSize.max,
-              children: <Widget>[
-                // Padding(
-                //   padding: EdgeInsets.only(top: 75.0),
-                //   child: new Image(
-                //       width: MediaQuery.of(context).size.width/2,
-                //       height: MediaQuery.of(context).size.height/6,
-                //       fit: BoxFit.fill,
-                //       image: new AssetImage('assets/login_logo.png')),
-                // ),
-                Padding(
-                  padding: EdgeInsets.only(top: 40.0),
-                  child: _buildMenuBar(context),
-                ),
-                Expanded(
-                  flex: 2,
-                  child: PageView(
-                    controller: _pageController,
-                    onPageChanged: (i) {
-                      final appStateData = Provider.of<AppState>(
-                          context); //here appstate initialized
-                      if (i == 0) {
-                        appStateData.colorLeftReverse(); //here appstate called
-
-                      } else if (i == 1) {
-                        appStateData.colorRightReverse(); //here appstate called
-
-                      }
-                    },
-                    children: <Widget>[
-                      new ConstrainedBox(
-                        constraints: const BoxConstraints.expand(),
-                        child: _buildSignIn(context),
-                      ),
-                      new ConstrainedBox(
-                        constraints: const BoxConstraints.expand(),
-                        child: _buildSignUp(context),
-                      ),
+      body: ModalProgressHUD(
+        inAsyncCall: _loaderState,
+        dismissible: false,
+        progressIndicator: new AlertDialog(
+          content: new Row(
+            mainAxisSize: MainAxisSize.max,
+            children: <Widget>[
+              new CircularProgressIndicator(),
+              new SizedBox(
+                width: 10.0,
+              ),
+              new Text("Please Wait...")
+            ],
+          ),
+        ),
+        child: NotificationListener<OverscrollIndicatorNotification>(
+          onNotification: (overscroll) {
+            overscroll.disallowGlow();
+          },
+          child: SingleChildScrollView(
+            child: Container(
+              width: MediaQuery.of(context).size.width,
+              height: MediaQuery.of(context).size.height,
+              decoration: new BoxDecoration(
+                gradient: new LinearGradient(
+                    colors: [
+                      themeas.Colors.loginGradientStart,
+                      themeas.Colors.loginGradientEnd
                     ],
+                    begin: const FractionalOffset(0.0, 0.0),
+                    end: const FractionalOffset(1.0, 1.0),
+                    stops: [0.0, 1.0],
+                    tileMode: TileMode.clamp),
+              ),
+              child: Column(
+                mainAxisSize: MainAxisSize.max,
+                children: <Widget>[
+                  // Padding(
+                  //   padding: EdgeInsets.only(top: 75.0),
+                  //   child: new Image(
+                  //       width: MediaQuery.of(context).size.width/2,
+                  //       height: MediaQuery.of(context).size.height/6,
+                  //       fit: BoxFit.fill,
+                  //       image: new AssetImage('assets/login_logo.png')),
+                  // ),
+                  Padding(
+                    padding: EdgeInsets.only(top: 40.0),
+                    child: _buildMenuBar(context),
                   ),
-                ),
-              ],
+                  Expanded(
+                    flex: 2,
+                    child: PageView(
+                      controller: _pageController,
+                      onPageChanged: (i) {
+                        final appStateData = Provider.of<AppState>(
+                            context); //here appstate initialized
+                        if (i == 0) {
+                          appStateData
+                              .colorLeftReverse(); //here appstate called
+
+                        } else if (i == 1) {
+                          appStateData
+                              .colorRightReverse(); //here appstate called
+
+                        }
+                      },
+                      children: <Widget>[
+                        new ConstrainedBox(
+                          constraints: const BoxConstraints.expand(),
+                          child: _buildSignIn(context),
+                        ),
+                        new ConstrainedBox(
+                          constraints: const BoxConstraints.expand(),
+                          child: _buildSignUp(context),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         ),
@@ -184,7 +202,6 @@ class _LoginPageState extends State<LoginPage>
     myFocusNodePhone.dispose();
     myFocusNodeUserName.dispose();
     _pageController?.dispose();
-
 
     _subscription.cancel();
     super.dispose();
@@ -365,59 +382,73 @@ class _LoginPageState extends State<LoginPage>
                     ),
 
                     //sign in button design data
-                    Container(
-                      decoration: new BoxDecoration(
-                        borderRadius: BorderRadius.all(Radius.circular(5.0)),
-                        boxShadow: <BoxShadow>[
-                          BoxShadow(
-                            color: themeas.Colors.loginGradientStart,
-                            offset: Offset(1.0, 6.0),
-                            blurRadius: 20.0,
-                          ),
-                          BoxShadow(
-                            color: themeas.Colors.loginGradientEnd,
-                            offset: Offset(1.0, 6.0),
-                            blurRadius: 20.0,
-                          ),
-                        ],
-                        gradient: new LinearGradient(
-                            colors: [
-                              themeas.Colors.loginGradientEnd,
-                              themeas.Colors.loginGradientStart
-                            ],
-                            begin: const FractionalOffset(0.2, 0.2),
-                            end: const FractionalOffset(1.0, 1.0),
-                            stops: [0.0, 1.0],
-                            tileMode: TileMode.clamp),
-                      ),
-                      child: MaterialButton(
-                          highlightColor: Colors.transparent,
-                          splashColor: themeas.Colors.loginGradientEnd,
-                          //shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(5.0))),
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(
-                                vertical: 10.0, horizontal: 42.0),
-                            child: Text(
-                              "LOGIN",
-                              style: TextStyle(
-                                  color: Colors.white, fontSize: 25.0),
+                    new Mutation(
+                      builder: (RunMutation runMutation, QueryResult result) {
+                        return MaterialButton(
+                            color: Colors.redAccent,
+                            highlightColor: Colors.transparent,
+                            splashColor: themeas.Colors.loginGradientEnd,
+                            //shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(5.0))),
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(
+                                  vertical: 10.0, horizontal: 42.0),
+                              child: Text(
+                                "LOGIN",
+                                style: TextStyle(
+                                    color: Colors.white, fontSize: 25.0),
+                              ),
                             ),
-                          ),
-                          onPressed: () {
-                            // print(loginPasswordController.text.toString());
-                            //showInSnackBar("Login button pressed");
-                            if (!_connected) {
-                              showInSnackBar("No Internet Connection");
-                            }
-                            if (_formKey2.currentState.validate() &&
-                                _connected) {
-                              Navigator.push(context, new MaterialPageRoute(
-                                  builder: (BuildContext context) {
-                                return new HomePAgeMAin();
-                              }));
-                            }
-                          }),
-                    ),
+                            onPressed: () {
+                              // print(loginPasswordController.text.toString());
+                              //showInSnackBar("Login button pressed");
+                              if (!_connected) {
+                                showInSnackBar("No Internet Connection");
+                              }
+                              if (_formKey2.currentState.validate() &&
+                                  _connected) {
+                                runMutation({
+                                  'login': loginEmailController.text,
+                                  'password': loginPasswordController.text
+                                });
+                                setState(() {
+                                  _loaderState = true;
+                                });
+                              }
+                            });
+                      },
+                      options: MutationOptions(
+                          document: globals.signInQueryMutation),
+                      update: (Cache cache, QueryResult result) {
+                        print("update called");
+                        //print(signup)
+                        if (result.hasErrors) {
+                          setState(() {
+                            _loaderState = false;
+                          });
+
+                          showInSnackBar(result.errors.toString());
+                        } else if (result.data['signIn']['token'] != null) {
+                          // _pr.hide();
+                          // print(result.data['signUp']['token']);
+                          //globals.setToken(result.data['signUp']['token']);
+                          _setToken(result.data['signIn']['token']);
+
+                          //print(globals.getToken().toString());
+                          Navigator.push(context, new MaterialPageRoute(
+                              builder: (BuildContext context) {
+                            return new HomePAgeMAin();
+                          }));
+
+                          //showInSnackBar(result.data['signUp']['token']);
+
+                        } else
+                          setState(() {
+                            _loaderState = false;
+                          });
+
+                        showInSnackBar("wrong Happened");
+                      },
+                    )
                   ],
                 ),
               ),
@@ -742,7 +773,7 @@ class _LoginPageState extends State<LoginPage>
                       }).toList(),
                       onChanged: (value) {
                         setState(() {
-                          dropDownvalue2=value;
+                          dropDownvalue2 = value;
                         });
                         // print(dropDownvalue2);
                       },
@@ -843,10 +874,9 @@ class _LoginPageState extends State<LoginPage>
 
               //button design of sign up
               new Mutation(
-                
                 builder: (RunMutation runMutation, QueryResult result) {
                   return MaterialButton(
-                    color: Colors.blueAccent,
+                      color: Colors.redAccent,
                       highlightColor: Colors.transparent,
                       splashColor: themeas.Colors.loginGradientEnd,
                       //shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(5.0))),
@@ -855,17 +885,18 @@ class _LoginPageState extends State<LoginPage>
                             vertical: 10.0, horizontal: 42.0),
                         child: Text(
                           "SIGN UP",
-                          style:
-                              TextStyle(color: Colors.white, fontSize: 16.0),
+                          style: TextStyle(color: Colors.white, fontSize: 16.0),
                         ),
                       ),
                       onPressed: () {
                         if (!_connected)
                           showInSnackBar("No Internet Connection");
-                        if (_formKey.currentState.validate() &&
-                            _connected) {
+                        if (_formKey.currentState.validate() && _connected) {
+                          setState(() {
+                            _loaderState = true;
+                          });
 
-                                                        runMutation({
+                          runMutation({
                             'user_name': signupUserNameController.text,
                             'full_name': signupNameController.text,
                             'email': signupEmailController.text,
@@ -874,41 +905,43 @@ class _LoginPageState extends State<LoginPage>
                             'division': dropdownvalue,
                             'region': dropDownvalue2,
                             'address': signupAddressController.text
-                            
                           });
                           //print("run mutation");
                           //showInSnackBar("SignUp button pressed");
 
-                          //_pr.show();
-                        } 
+                        }
                       });
                 },
-                options:
-                    MutationOptions(document: globals.signUpQueryMutation),
+                options: MutationOptions(document: globals.signUpQueryMutation),
                 update: (Cache cache, QueryResult result) {
                   print("update called");
                   //print(signup)
                   if (result.hasErrors) {
-                    //_pr.hide();
+                    setState(() {
+                      _loaderState = false;
+                    });
+
                     showInSnackBar(result.errors.toString());
                   } else if (result.data['signUp']['token'] != null) {
-                   // _pr.hide();
-                   // print(result.data['signUp']['token']);
+                    // _pr.hide();
+                    // print(result.data['signUp']['token']);
                     //globals.setToken(result.data['signUp']['token']);
                     _setToken(result.data['signUp']['token']);
-                   
-                      //print(globals.getToken().toString());
-                     Navigator.push(context, new MaterialPageRoute(
-                                  builder: (BuildContext context) {
-                                return new HomePAgeMAin();
-                              })); 
-                    
+
+                    //print(globals.getToken().toString());
+                    Navigator.push(context,
+                        new MaterialPageRoute(builder: (BuildContext context) {
+                      return new HomePAgeMAin();
+                    }));
+
                     //showInSnackBar(result.data['signUp']['token']);
-                     
-                    
-                  } else
-                    //_pr.hide();
-                  showInSnackBar("wrong Happened");
+
+                  } else {
+                    showInSnackBar("wrong Happened");
+                    setState(() {
+                      _loaderState = false;
+                    });
+                  }
                 },
               )
             ],
@@ -917,12 +950,31 @@ class _LoginPageState extends State<LoginPage>
       ),
     );
   }
-  _setToken(String tvalue)async{
-    await SharedPreferences.getInstance().then((value){
+
+  // void _showDialouge(){
+  //   showDialog(context: context,
+  //   builder: (BuildContext context){
+  //     return AlertDialog(
+  //       content: Row(
+  //         children: <Widget>[
+  //           new SizedBox(width: 10.0,),
+  //           new CircularProgressIndicator(),
+  //           new SizedBox(width: 10.0,),
+  //           new Text("Please Wait...")
+  //         ],
+  //       ),
+
+  //     );
+  //   }
+
+  //   );
+  // }
+
+  _setToken(String tvalue) async {
+    await SharedPreferences.getInstance().then((value) {
       value.setString('token', tvalue);
       //print(tvalue);
     });
-
   }
 
 //end of sign up page design

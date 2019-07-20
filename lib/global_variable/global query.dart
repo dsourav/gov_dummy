@@ -1,6 +1,8 @@
 
 library govdummy.globals;
 import 'package:shared_preferences/shared_preferences.dart';
+
+
 String signUpQueryMutation=
 """mutation signuprun(\$full_name: String!,
 \$user_name: String!,
@@ -26,20 +28,34 @@ String signUpQueryMutation=
 }
 """;
 
+String signInQueryMutation="""
+mutation signin(
+\$login: String!,
+\$password: String!
 
- getToken() async {
-final prefs = await SharedPreferences.getInstance();
-final tokenValue=prefs.getString("token");
-return tokenValue??null;
+){
+  signIn(
+  login: \$login,
+  password: \$password
+  ){
+    token
+  }
 }
+""";
 
-setToken(String tokenValue) async {
-  final prefs = await SharedPreferences.getInstance();
-  prefs.setString("token", tokenValue);
-}
+//  getToken() async {
+// final prefs = await SharedPreferences.getInstance();
+// final tokenValue=prefs.getString("token");
+// return tokenValue??null;
+// }
 
-removeToken() async {
-  final prefs = await SharedPreferences.getInstance();
-  prefs.remove("token");
+// setToken(String tokenValue) async {
+//   final prefs = await SharedPreferences.getInstance();
+//   prefs.setString("token", tokenValue);
+// }
 
-}
+// removeToken() async {
+//   final prefs = await SharedPreferences.getInstance();
+//   prefs.remove("token");
+
+// }
