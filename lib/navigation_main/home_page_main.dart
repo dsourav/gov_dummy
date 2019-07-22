@@ -174,25 +174,27 @@ class _HomePAgeMAinState extends State<HomePAgeMAin> {
         //  body:_getDrawerItemWidget(_selectedDrawerIndex)
 
         body: WillPopScope(
-                  child: new Column(
-            children: <Widget>[
-              new Visibility(
-                visible: !connected,
-                child: new Container(
-                  color: Colors.red,
-                  child: new Center(
-                    child: new Text(
-                      "OFFLINE",
-                      style: new TextStyle(color: Colors.white),
-                    ),
-                  ),
-                ),
-              ),
-              new Expanded(
-                child: _getDrawerItemWidget(_selectedDrawerIndex),
-              )
-            ],
-          ), onWillPop: () async {
+          //         child: new Column(
+          //   children: <Widget>[
+          //     new Visibility(
+          //       visible: !connected,
+          //       child: new Container(
+          //         color: Colors.red,
+          //         child: new Center(
+          //           child: new Text(
+          //             "OFFLINE",
+          //             style: new TextStyle(color: Colors.white),
+          //           ),
+          //         ),
+          //       ),
+          //     ),
+          //     new Expanded(
+          //       child: _getDrawerItemWidget(_selectedDrawerIndex),
+          //     )
+          //   ],
+          // ), 
+          child: _getDrawerItemWidget(_selectedDrawerIndex),
+          onWillPop: () async {
           return Future.value(
               false); //return a `Future` with false value so this route cant be popped or closed.
         },

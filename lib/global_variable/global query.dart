@@ -43,19 +43,10 @@ mutation signin(
 }
 """;
 
-//  getToken() async {
-// final prefs = await SharedPreferences.getInstance();
-// final tokenValue=prefs.getString("token");
-// return tokenValue??null;
-// }
-
-// setToken(String tokenValue) async {
-//   final prefs = await SharedPreferences.getInstance();
-//   prefs.setString("token", tokenValue);
-// }
-
-// removeToken() async {
-//   final prefs = await SharedPreferences.getInstance();
-//   prefs.remove("token");
-
-// }
+String categoriesQuery="""
+query categoresitem{
+  categories{
+    name
+  }
+}
+""";
