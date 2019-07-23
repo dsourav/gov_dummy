@@ -1,6 +1,7 @@
 import 'package:design_demo/graphql/graphql_object1.dart';
 import 'package:design_demo/model.dart';
 import 'package:design_demo/navigation_main/home_page_main.dart';
+import 'package:design_demo/product_detals/product_detailt.dart';
 import 'package:flutter/material.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:provider/provider.dart';
@@ -43,7 +44,14 @@ class MyApp extends StatelessWidget {
             theme: ThemeData(
               primarySwatch: Colors.blue,
             ),
-            home: new HomePAgeMAin()),
+            // home: new HomePAgeMAin(),
+            home: new ProductDetailPage(),
+            routes: {
+             '/home': (context) => HomePAgeMAin(),
+             '/login':(context)=>LoginPage()
+            },
+            
+            ),
       ),
     );
   }

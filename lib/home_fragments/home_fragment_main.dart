@@ -20,6 +20,15 @@ class _HomeFragmentMainState extends State<HomeFragmentMain> {
     return new Container(
         child: new ListView(
       children: <Widget>[
+        new Container(
+          padding: EdgeInsets.only(top: 5.0, left: 5.0),
+          alignment: Alignment.centerLeft,
+          child: new Text(
+            "Categories",
+            style: new TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
+          ),
+        ),
+        //categories section
         new Query(
           builder: (QueryResult result, {VoidCallback refetch}) {
             if (result.errors != null) {
@@ -34,15 +43,6 @@ class _HomeFragmentMainState extends State<HomeFragmentMain> {
             return new Container(
                 child: new Column(
               children: <Widget>[
-                new Container(
-                  padding: EdgeInsets.only(top: 5.0, left: 5.0),
-                  alignment: Alignment.centerLeft,
-                  child: new Text(
-                    "Categories",
-                    style: new TextStyle(
-                        fontSize: 18.0, fontWeight: FontWeight.bold),
-                  ),
-                ),
                 Container(
                   padding: EdgeInsets.only(
                     top: 10,
@@ -52,7 +52,7 @@ class _HomeFragmentMainState extends State<HomeFragmentMain> {
                   child: ListView.builder(
                     scrollDirection: Axis.horizontal,
                     primary: false,
-                    itemCount: cateGorieslist.length,
+                    itemCount: 0,
                     itemBuilder: (BuildContext context, int index) {
                       //Map place = places.reversed.toList()[index];
                       final _catName = cateGorieslist[index]['name'];
@@ -107,6 +107,8 @@ class _HomeFragmentMainState extends State<HomeFragmentMain> {
           },
           options: QueryOptions(document: globals.categoriesQuery),
         ),
+
+        //all product text section
         new Container(
           padding: EdgeInsets.only(top: 5.0, left: 5.0),
           alignment: Alignment.centerLeft,
@@ -115,76 +117,94 @@ class _HomeFragmentMainState extends State<HomeFragmentMain> {
             style: new TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
           ),
         ),
-        Container(
-            child: GridView.builder(
-          gridDelegate:
-              SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
-          itemBuilder: (BuildContext context, int index) {
-            return new Card(
-              child: new GridTile(
-                child: Image.asset(
-                  'assets/veg.jpg',
-                  fit: BoxFit.fill,
-                ),
-                header: Opacity(
-                  opacity: 0.9,
-                  child: new Container(
-                    padding: EdgeInsets.only(left: 5.0, top: 5.0, bottom: 5.0),
-                    decoration: new BoxDecoration(
-                      color: Colors.teal,
-                    ),
-                    child: new Align(
-                      alignment: Alignment.centerLeft,
-                      child: new Text(
-                        "Veg Name",
-                        style: new TextStyle(color: Colors.white),
-                      ),
-                    ),
-                  ),
-                ),
-                footer: new Opacity(
-                  opacity: 0.8,
-                  child: new Container(
-                    padding: EdgeInsets.only(left: 5.0, top: 5.0, bottom: 5.0),
-                    decoration: new BoxDecoration(
-                      color: Colors.greenAccent,
-                    ),
-                    child: new Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: <Widget>[
-                        new Flexible(
-                          child: new Container(
-                            padding: EdgeInsets.only(left: 2.0, right: 2.0),
-                            child: new Text(
-                              "Price:",
-                              style: new TextStyle(color: Colors.black),
-                              textAlign: TextAlign.left,
-                              maxLines: 1,
-                            ),
-                          ),
-                        ),
-                        new Flexible(
-                          child: Container(
-                            padding: EdgeInsets.only(left: 2.0, right: 2.0),
-                            child: new Text(
-                              "Qty:",
-                              style: new TextStyle(color: Colors.black),
-                              textAlign: TextAlign.right,
-                              maxLines: 1,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-            );
-          },
-          itemCount: 10,
-          physics: ScrollPhysics(), // to disable GridView's scrolling
-          shrinkWrap: true,
-        ))
+
+        // new Query(
+        //   builder: (QueryResult result, {VoidCallback refetch}) {
+        //     if (result.hasErrors != null) {
+        //       return Text(result.errors.toString());
+        //     }
+        //     if (result.loading) {
+        //       return Text('Loading');
+        //     }
+
+        //     List allProductslist=result.data['products']['edges'];
+        //     print(allProductslist.toString());
+        //     // return new Container(
+        //     //     child: GridView.builder(
+        //     //   gridDelegate:
+        //     //       SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
+        //     //   itemBuilder: (BuildContext context, int index) {
+        //     //     final produtDescription=allProductslist[index];
+        //     //     return new Card(
+        //     //       child: new GridTile(
+        //     //         child: FadeInImage.assetNetwork(
+        //     //           fit: BoxFit.fill,
+        //     //           image: produtDescription['images'][0],
+        //     //           placeholder: 'assets/veg.jpg',),
+        //     //         header: Opacity(
+        //     //           opacity: 0.9,
+        //     //           child: new Container(
+        //     //             padding:
+        //     //                 EdgeInsets.only(left: 5.0, top: 5.0, bottom: 5.0),
+        //     //             decoration: new BoxDecoration(
+        //     //               color: Colors.teal,
+        //     //             ),
+        //     //             child: new Align(
+        //     //               alignment: Alignment.centerLeft,
+        //     //               child: new Text(
+        //     //                 produtDescription['name'].toString()??"not found",
+        //     //                 style: new TextStyle(color: Colors.white),
+        //     //               ),
+        //     //             ),
+        //     //           ),
+        //     //         ),
+        //     //         footer: new Opacity(
+        //     //           opacity: 0.8,
+        //     //           child: new Container(
+        //     //             padding:
+        //     //                 EdgeInsets.only(left: 5.0, top: 5.0, bottom: 5.0),
+        //     //             decoration: new BoxDecoration(
+        //     //               color: Colors.greenAccent,
+        //     //             ),
+        //     //             child: new Row(
+        //     //               mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        //     //               children: <Widget>[
+        //     //                 new Flexible(
+        //     //                   child: new Container(
+        //     //                     padding: EdgeInsets.only(left: 2.0, right: 2.0),
+        //     //                     child: new Text(
+        //     //                       "Price: ${produtDescription['price'].toString()??"not found"}",
+        //     //                       style: new TextStyle(color: Colors.black),
+        //     //                       textAlign: TextAlign.left,
+        //     //                       maxLines: 1,
+        //     //                     ),
+        //     //                   ),
+        //     //                 ),
+        //     //                 new Flexible(
+        //     //                   child: Container(
+        //     //                     padding: EdgeInsets.only(left: 2.0, right: 2.0),
+        //     //                     child: new Text(
+        //     //                       "Qty: ${produtDescription['price_extension'].toString()??"not found"}",
+        //     //                       style: new TextStyle(color: Colors.black),
+        //     //                       textAlign: TextAlign.right,
+        //     //                       maxLines: 1,
+        //     //                     ),
+        //     //                   ),
+        //     //                 ),
+        //     //               ],
+        //     //             ),
+        //     //           ),
+        //     //         ),
+        //     //       ),
+        //     //     );
+        //     //   },
+        //     //   itemCount: allProductslist.length,
+        //     //   physics: ScrollPhysics(), // to disable GridView's scrolling
+        //     //   shrinkWrap: true,
+        //     // ));
+        //   },
+        //   options: QueryOptions(document: globals.allProductsQuery),
+        // )
       ],
     ));
   }

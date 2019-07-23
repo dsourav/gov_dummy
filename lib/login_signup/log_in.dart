@@ -395,7 +395,7 @@ class _LoginPageState extends State<LoginPage>
                               child: Text(
                                 "LOGIN",
                                 style: TextStyle(
-                                    color: Colors.white, fontSize: 25.0),
+                                    color: Colors.white, fontSize: 16.0),
                               ),
                             ),
                             onPressed: () {
@@ -434,10 +434,11 @@ class _LoginPageState extends State<LoginPage>
                           _setToken(result.data['signIn']['token']);
 
                           //print(globals.getToken().toString());
-                          Navigator.push(context, new MaterialPageRoute(
-                              builder: (BuildContext context) {
-                            return new HomePAgeMAin();
-                          }));
+                          // Navigator.push(context, new MaterialPageRoute(
+                          //     builder: (BuildContext context) {
+                          //   return new HomePAgeMAin();
+                          // }));
+                          Navigator.of(context).popAndPushNamed('/home');
 
                           //showInSnackBar(result.data['signUp']['token']);
 
@@ -636,157 +637,7 @@ class _LoginPageState extends State<LoginPage>
                 color: Colors.grey[400],
               ),
 
-              new SizedBox(
-                height: 10.0,
-              ),
-
-              //input field dropdown text
-              new Container(
-                  child: new Text(
-                "Select Division & Region",
-                style: new TextStyle(color: Colors.black87, fontSize: 16.0),
-              )),
-
-              //input field dropdown design data
-              new Container(
-                margin: EdgeInsets.only(left: 20.0, right: 20.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    new DropdownButton<String>(
-                      value: dropdownvalue,
-                      items: itemsBdAll
-                          .map<DropdownMenuItem<String>>((String value) {
-                        return DropdownMenuItem<String>(
-                            child: new Text(value), value: value);
-                      }).toList(),
-                      onChanged: (value) {
-                        if (value.toString() == 'Barishal') {
-                          itemsRegion = [
-                            'All of Barishal',
-                            'Patuakhali',
-                            'Jhalokati',
-                            'Bhola',
-                            'Pirojpur',
-                            'Barguna'
-                          ];
-                          dropDownvalue2 = 'All of Barishal';
-                        }
-
-                        if (value.toString() == 'Chattogram') {
-                          itemsRegion = [
-                            'All of Chattogram',
-                            'Agrabad',
-                            'Nasirabad',
-                            'Kotwali',
-                            'Halishahar',
-                            'Chawkbazar'
-                          ];
-                          dropDownvalue2 = 'All of Chattogram';
-                        }
-
-                        if (value.toString() == 'Dhaka') {
-                          itemsRegion = [
-                            'All of Dhaka',
-                            'Mirpur',
-                            'Uttara',
-                            'Dhanmondi',
-                            'Gulshan',
-                            'Mohammadpur'
-                          ];
-                          dropDownvalue2 = 'All of Dhaka';
-                        }
-
-                        if (value.toString() == 'Khulna') {
-                          itemsRegion = [
-                            'All of Khulna',
-                            'Khulna Sadar',
-                            'Sonadanga',
-                            'Khalishpur',
-                            'Daulatpur',
-                            'Rupsa'
-                          ];
-                          dropDownvalue2 = 'All of Khulna';
-                        }
-
-                        if (value.toString() == 'Mymensingh') {
-                          itemsRegion = [
-                            'All of Mymensingh',
-                            'Ganginar par',
-                            'Chorpara',
-                            'Town Hall',
-                            'Valuka',
-                            'Kewatkhali'
-                          ];
-                          dropDownvalue2 = 'All of Mymensingh';
-                        }
-
-                        if (value.toString() == 'Rajshahi') {
-                          itemsRegion = [
-                            'All of Rajshahi',
-                            'Shaheb Bazar',
-                            'Shiroil',
-                            'New Market',
-                            'Motihar',
-                            'Uposahar'
-                          ];
-                          dropDownvalue2 = 'All of Rajshahi';
-                        }
-
-                        if (value.toString() == 'Rangpur') {
-                          itemsRegion = [
-                            'All of Rangpur',
-                            'Jahaj Company More',
-                            'Dhap',
-                            'Shapla Chottor',
-                            'Lalbag Mor',
-                            'Pourobazar'
-                          ];
-                          dropDownvalue2 = 'All of Rangpur';
-                        }
-
-                        if (value.toString() == 'Sylhet') {
-                          itemsRegion = [
-                            'All of Sylhet',
-                            'Zinda Bazar',
-                            'Bandar Bazar',
-                            'Amber Khana',
-                            'South Surma',
-                            'Uposhohor'
-                          ];
-                          dropDownvalue2 = 'All of Sylhet';
-                        }
-                        setState(() {
-                          dropdownvalue = value;
-                        });
-                        print(dropdownvalue);
-                      },
-                    ),
-                    new DropdownButton(
-                      value: dropDownvalue2,
-                      items: itemsRegion
-                          .map<DropdownMenuItem<String>>((String value) {
-                        return new DropdownMenuItem(
-                          child: new Text(value),
-                          value: value,
-                        );
-                      }).toList(),
-                      onChanged: (value) {
-                        setState(() {
-                          dropDownvalue2 = value;
-                        });
-                        // print(dropDownvalue2);
-                      },
-                    )
-                  ],
-                ),
-              ),
-
-              Container(
-                width: 250.0,
-                height: 1.0,
-                color: Colors.grey[400],
-              ),
+             
 
               //input field sign up password
               Padding(
@@ -868,6 +719,162 @@ class _LoginPageState extends State<LoginPage>
                 height: 1.0,
                 color: Colors.grey[400],
               ),
+               new SizedBox(
+                height: 10.0,
+              ),
+
+
+              //input field dropdown text
+              new Container(
+                  child: new Text(
+                "Select Division & Region",
+                style: new TextStyle(color: Colors.black87, fontSize: 16.0),
+              )),
+
+              //input field dropdown design data
+              new Container(
+                margin: EdgeInsets.only(left: 20.0, right: 20.0),
+                child: Wrap(
+                    
+                    children: <Widget>[
+                      new DropdownButton<String>(
+                       value: dropdownvalue,
+                       items: itemsBdAll
+                           .map<DropdownMenuItem<String>>((String value) {
+                         return DropdownMenuItem<String>(
+                             child: new Text(value), value: value);
+                       }).toList(),
+                       onChanged: (value) {
+                         if (value.toString() == 'Barishal') {
+                           itemsRegion = [
+                             'All of Barishal',
+                             'Patuakhali',
+                             'Jhalokati',
+                             'Bhola',
+                             'Pirojpur',
+                             'Barguna'
+                           ];
+                           dropDownvalue2 = 'All of Barishal';
+                         }
+
+                         if (value.toString() == 'Chattogram') {
+                           itemsRegion = [
+                             'All of Chattogram',
+                             'Agrabad',
+                             'Nasirabad',
+                             'Kotwali',
+                             'Halishahar',
+                             'Chawkbazar'
+                           ];
+                           dropDownvalue2 = 'All of Chattogram';
+                         }
+
+                         if (value.toString() == 'Dhaka') {
+                           itemsRegion = [
+                             'All of Dhaka',
+                             'Mirpur',
+                             'Uttara',
+                             'Dhanmondi',
+                             'Gulshan',
+                             'Mohammadpur'
+                           ];
+                           dropDownvalue2 = 'All of Dhaka';
+                         }
+
+                         if (value.toString() == 'Khulna') {
+                           itemsRegion = [
+                             'All of Khulna',
+                             'Khulna Sadar',
+                             'Sonadanga',
+                             'Khalishpur',
+                             'Daulatpur',
+                             'Rupsa'
+                           ];
+                           dropDownvalue2 = 'All of Khulna';
+                         }
+
+                         if (value.toString() == 'Mymensingh') {
+                           itemsRegion = [
+                             'All of Mymensingh',
+                             'Ganginar par',
+                             'Chorpara',
+                             'Town Hall',
+                             'Valuka',
+                             'Kewatkhali'
+                           ];
+                           dropDownvalue2 = 'All of Mymensingh';
+                         }
+
+                         if (value.toString() == 'Rajshahi') {
+                           itemsRegion = [
+                             'All of Rajshahi',
+                             'Shaheb Bazar',
+                             'Shiroil',
+                             'New Market',
+                             'Motihar',
+                             'Uposahar'
+                           ];
+                           dropDownvalue2 = 'All of Rajshahi';
+                         }
+
+                         if (value.toString() == 'Rangpur') {
+                           itemsRegion = [
+                             'All of Rangpur',
+                             'Jahaj Company More',
+                             'Dhap',
+                             'Shapla Chottor',
+                             'Lalbag Mor',
+                             'Pourobazar'
+                           ];
+                           dropDownvalue2 = 'All of Rangpur';
+                         }
+
+                         if (value.toString() == 'Sylhet') {
+                           itemsRegion = [
+                             'All of Sylhet',
+                             'Zinda Bazar',
+                             'Bandar Bazar',
+                             'Amber Khana',
+                             'South Surma',
+                             'Uposhohor'
+                           ];
+                           dropDownvalue2 = 'All of Sylhet';
+                         }
+                         setState(() {
+                           dropdownvalue = value;
+                         });
+                         print(dropdownvalue);
+                       },
+                        ),
+                      new DropdownButton(
+                       value: dropDownvalue2,
+                       items: itemsRegion
+                           .map<DropdownMenuItem<String>>((String value) {
+                         return new DropdownMenuItem(
+                           child: new Text(value),
+                           value: value,
+                         );
+                       }).toList(),
+                       onChanged: (value) {
+                         setState(() {
+                           dropDownvalue2 = value;
+                         });
+                         // print(dropDownvalue2);
+                       },
+                        )
+                     
+                    ],
+                  ),
+              ),
+
+               Container(
+                width: 250.0,
+                height: 1.0,
+                color: Colors.grey[400],
+              ),
+
+
+
               new SizedBox(
                 height: 20.0,
               ),
@@ -929,10 +936,11 @@ class _LoginPageState extends State<LoginPage>
                     _setToken(result.data['signUp']['token']);
 
                     //print(globals.getToken().toString());
-                    Navigator.push(context,
-                        new MaterialPageRoute(builder: (BuildContext context) {
-                      return new HomePAgeMAin();
-                    }));
+                    // Navigator.push(context,
+                    //     new MaterialPageRoute(builder: (BuildContext context) {
+                    //   return new HomePAgeMAin();
+                    // }));
+                     Navigator.of(context).popAndPushNamed('/home');
 
                     //showInSnackBar(result.data['signUp']['token']);
 

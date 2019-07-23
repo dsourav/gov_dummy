@@ -38,6 +38,8 @@ class _HomePAgeMAinState extends State<HomePAgeMAin> {
   bool state = false;
   bool connected = true;
   var subscription;
+  Map<String,dynamic> map;
+  String _userEmail;
 
   Future<void> _getConnectivityStatus() async {
     var connectivityResult = await (Connectivity().checkConnectivity());
@@ -95,6 +97,9 @@ class _HomePAgeMAinState extends State<HomePAgeMAin> {
     super.initState();
     _getToken();
 
+         
+   
+
     subscription = Connectivity()
         .onConnectivityChanged
         .listen((ConnectivityResult result) {
@@ -120,6 +125,13 @@ class _HomePAgeMAinState extends State<HomePAgeMAin> {
 
   @override
   Widget build(BuildContext context) {
+   
+     if(token!=null){
+     map=globals.parseJwt(token);
+     _userEmail=map['email'].toString();
+     print(map['email'].toString());
+    }
+    
     _getConnectivityStatus();
     var drawerOptions = <Widget>[];
     for (int i = 0; i < widget.draawerItems.length; i++) {
@@ -137,10 +149,12 @@ class _HomePAgeMAinState extends State<HomePAgeMAin> {
       title: new Text("Log Out"),
       onTap: () {
      _romeToken();
-        Navigator.push(
-            context,
-            new MaterialPageRoute(
-                builder: (BuildContext context) => new LoginPage()));
+        // Navigator.push(
+        //     context,
+        //     new MaterialPageRoute(
+        //         builder: (BuildContext context) => new LoginPage()));
+
+        Navigator.of(context).popAndPushNamed('/login');
       },
     ));
 
@@ -157,7 +171,7 @@ class _HomePAgeMAinState extends State<HomePAgeMAin> {
             children: <Widget>[
               new UserAccountsDrawerHeader(
                 accountName:
-                    token != null ? new Text("has toke") : new Text("no token"),
+                    token != null ? new Text(_userEmail??"") : new Text("not signed in"),
                 otherAccountsPictures: <Widget>[],
                 accountEmail: null,
                 currentAccountPicture: new CircleAvatar(
@@ -196,7 +210,7 @@ class _HomePAgeMAinState extends State<HomePAgeMAin> {
           child: _getDrawerItemWidget(_selectedDrawerIndex),
           onWillPop: () async {
           return Future.value(
-              false); //return a `Future` with false value so this route cant be popped or closed.
+              true); //return a `Future` with false value so this route cant be popped or closed.
         },
         ));
   }
