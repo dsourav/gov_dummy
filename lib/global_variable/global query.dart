@@ -47,6 +47,7 @@ String categoriesQuery="""
 query categoresitem{
   categories{
     name
+    image
   }
 }
 """;
@@ -54,7 +55,6 @@ query categoresitem{
 String allProductsQuery="""
 query allproducts{
   products{
-    
     edges{
       id
       name

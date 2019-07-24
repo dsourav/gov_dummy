@@ -129,7 +129,7 @@ class _HomePAgeMAinState extends State<HomePAgeMAin> {
      if(token!=null){
      map=globals.parseJwt(token);
      _userEmail=map['email'].toString();
-     print(map['email'].toString());
+     //print(map['email'].toString());
     }
     
     _getConnectivityStatus();

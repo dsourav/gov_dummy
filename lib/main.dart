@@ -44,11 +44,12 @@ class MyApp extends StatelessWidget {
             theme: ThemeData(
               primarySwatch: Colors.blue,
             ),
-            // home: new HomePAgeMAin(),
-            home: new ProductDetailPage(),
+             home: new HomePAgeMAin(),
+           // home: new ProductDetailPage(),
             routes: {
              '/home': (context) => HomePAgeMAin(),
-             '/login':(context)=>LoginPage()
+             '/login':(context)=>LoginPage(),
+             
             },
             
             ),
