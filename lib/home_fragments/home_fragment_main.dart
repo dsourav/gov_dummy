@@ -163,7 +163,9 @@ class _HomeFragmentMainState extends State<HomeFragmentMain> {
                   );
                  // print(produtDescription['images'][0]);
                   return InkWell(
-                                        child: new GridTile(
+                                        child: Card(
+                                          elevation: 8.0,
+                                                                                  child: new GridTile(
                       child: FadeInImage.assetNetwork(
                         fit: BoxFit.fill,
                         image: produtDescription['images'][0]['url'].toString()??'assets/vej.jpg',
@@ -200,7 +202,7 @@ class _HomeFragmentMainState extends State<HomeFragmentMain> {
                                   child: new Container(
                                     padding: EdgeInsets.only(left: 2.0, right: 2.0),
                                     child: new Text(
-                                      "Price: ${produtDescription['price'].toString()??"not found"}",
+                                      "৳${produtDescription['price'].toString()??"not found"}",
                                       style: new TextStyle(color: Colors.black),
                                       textAlign: TextAlign.left,
                                       maxLines: 1,
@@ -223,6 +225,7 @@ class _HomeFragmentMainState extends State<HomeFragmentMain> {
                         ),
                       ),
                     ),
+                                        ),
 
                     onTap: (){
                       Navigator.of(context).push(new MaterialPageRoute(
