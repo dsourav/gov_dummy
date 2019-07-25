@@ -58,6 +58,7 @@ query allproducts{
     edges{
       id
       name
+      description
       quantity
       quantity_extension
       price
@@ -80,6 +81,7 @@ query allproducts{
         address
         region
         division
+        phone
       }     
     }
   }

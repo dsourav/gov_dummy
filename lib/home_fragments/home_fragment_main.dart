@@ -157,6 +157,8 @@ class _HomeFragmentMainState extends State<HomeFragmentMain> {
                       ownerDivision: produtDescription['user']['division']??null,
                       ownerRegion: produtDescription['user']['region']??null,
                       ownerImage: produtDescription['user']['image']['url']??null,
+                      productDescription: produtDescription['description']??null,
+                      ownerPhone: produtDescription['user']['phone']??null
 
                     )
 
