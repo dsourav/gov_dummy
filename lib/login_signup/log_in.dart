@@ -921,6 +921,7 @@ class _LoginPageState extends State<LoginPage>
                 },
                 options: MutationOptions(document: globals.signUpQueryMutation),
                 update: (Cache cache, QueryResult result) {
+                 // cache.read(key)
                   print("update called");
                   //print(signup)
                   if (result.hasErrors) {

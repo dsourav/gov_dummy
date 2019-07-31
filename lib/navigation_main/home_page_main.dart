@@ -4,6 +4,7 @@ import 'package:design_demo/feedback_fragments/feedback_main.dart';
 import 'package:design_demo/home_fragments/home_fragment_main.dart';
 import 'package:design_demo/login_signup/log_in.dart';
 import 'package:design_demo/my_oreders_fragment/me_order_fragment_main.dart';
+import 'package:design_demo/my_product/my_products.dart';
 import 'package:design_demo/profile_fragments/profile_main.dart';
 import 'package:design_demo/transaction_history_fragments/transact_history_main.dart';
 import 'package:flare_flutter/flare_actor.dart';
@@ -33,7 +34,7 @@ class HomePAgeMAin extends StatefulWidget {
 }
 
 class _HomePAgeMAinState extends State<HomePAgeMAin> {
-  var token;
+  //var token;
   int _selectedDrawerIndex = 0;
   bool state = false;
   bool connected = true;
@@ -109,12 +110,12 @@ class _HomePAgeMAinState extends State<HomePAgeMAin> {
 
   _getToken() async {
     await SharedPreferences.getInstance().then((onValue) {
-      token = onValue.getString('token') ?? null;
-      print(token.toString());
+      globals.token = onValue.getString('token') ?? null;
+      print(globals.token.toString());
     });
   }
   _romeToken()async{
-    if(token!=null){
+    if(globals.token!=null){
      await SharedPreferences.getInstance().then((val){
        val.remove('token');
     }); 
@@ -126,8 +127,8 @@ class _HomePAgeMAinState extends State<HomePAgeMAin> {
   @override
   Widget build(BuildContext context) {
    
-     if(token!=null){
-     map=globals.parseJwt(token);
+     if(globals.token!=null){
+     map=globals.parseJwt(globals.token);
      _userEmail=map['email'].toString();
      //print(map['email'].toString());
     }
@@ -155,8 +156,23 @@ class _HomePAgeMAinState extends State<HomePAgeMAin> {
         //         builder: (BuildContext context) => new LoginPage()));
 
         Navigator.of(context).popAndPushNamed('/login');
+      }, 
+     
+    )
+    
+    );
+    drawerOptions.add(new ListTile(
+      leading: new Icon(Icons.store_mall_directory),
+      title: new Text("My Product"),
+      onTap: (){
+        Navigator.of(context).push(new MaterialPageRoute(
+          builder: (BuildContext context) =>new MYProducts()
+
+        ));
+
       },
     ));
+       
 
     return new Scaffold(
         floatingActionButton: new FloatingActionButton(
@@ -167,11 +183,11 @@ class _HomePAgeMAinState extends State<HomePAgeMAin> {
           title: new Text(widget.draawerItems[_selectedDrawerIndex].title),
         ),
         drawer: new Drawer(
-          child: new Column(
+          child: new ListView(
             children: <Widget>[
               new UserAccountsDrawerHeader(
                 accountName:
-                    token != null ? new Text(_userEmail??"") : new Text("not signed in"),
+                    globals.token != null ? new Text(_userEmail??"") : new Text("not signed in"),
                 otherAccountsPictures: <Widget>[],
                 accountEmail: null,
                 currentAccountPicture: new CircleAvatar(

@@ -3,6 +3,8 @@ library govdummy.globals;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
 
+var token;
+
 String signUpQueryMutation=
 """mutation signuprun(\$full_name: String!,
 \$user_name: String!,
@@ -51,7 +53,15 @@ query categoresitem{
   }
 }
 """;
+String categoriesNameQuery="""
+query categoresitem{
+  categories{
+    name
+    id
+  }
+}
 
+""";
 String allProductsQuery="""
 query allproducts{
   products{
@@ -87,6 +97,64 @@ query allproducts{
   }
 }
 """;
+
+String addProductQeury="""mutation productadd(
+  \$name: String!
+  \$min_quantity: Int!,
+  \$min_quantity_extension: String!,
+  \$quantity: Int!,
+  \$quantity_extension: String!,
+  \$price: Float!,
+  \$price_extension: String!,
+  \$available_now: Boolean!,
+  \$retailable: Boolean!,
+  \$description: String!,
+  \$gov_price: Float!,
+  \$gov_price_extension: String!,
+  \$categoryId: ID!
+){
+  addProduct(
+    data:{
+      name:\$name,
+      min_quantity:\$min_quantity,
+      min_quantity_extension:\$min_quantity_extension,
+      quantity:\$quantity,
+      quantity_extension:\$quantity_extension,
+      price:\$price,
+      price_extension:\$price_extension,
+      available_now:\$available_now,
+      retailable:\$retailable,
+      description:\$description,
+      gov_price:\$gov_price,
+      gov_price_extension:\$gov_price_extension,
+      categoryId:\$categoryId,
+     
+    }
+  ){
+    user{
+      id
+      user_name
+    }
+   
+  }
+  
+}""";
+
+
+String addProductImagesQuery="""
+mutation productImage(\$image:Upload!){
+  addProductImage(
+    id:"72e31f2d-de71-4b23-a98e-4e0c78937b59"
+    image:\$image
+  ){
+    url
+    
+  }
+}
+""";
+
+
+
 
 
 

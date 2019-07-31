@@ -35,7 +35,11 @@ dependencies:
   liquid_progress_indicator: ^0.3.1
   numberpicker: ^1.0.0
   carousel_pro: ^1.0.0
+  image_picker: ^0.6.0+17
   auto_size_text: ^2.0.2+1
+  multi_image_picker: ^4.3.6
+  file_picker: ^1.3.8
+  flutter_svg: ^0.13.1
   flare_flutter:
     git: 
       url: git://github.com/2d-inc/Flare-Flutter.git
@@ -66,6 +70,8 @@ flutter:
     - assets/network.flr
     - assets/veg.jpg
     - assets/srv.jpg
+    - assets/user.svg
+    - assets/person.png
   #  - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

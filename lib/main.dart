@@ -5,10 +5,17 @@ import 'package:design_demo/product_detals/product_detailt.dart';
 import 'package:flutter/material.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'login_signup/log_in.dart';
-
-void main() => runApp(MyApp());
+import 'my_product/add_product.dart';
+import 'package:design_demo/global_variable/global query.dart' as globals;
+SharedPreferences sp;
+void main() async{ 
+  sp = await SharedPreferences.getInstance();
+  globals.token=sp.getString('token');
+  runApp(MyApp());
+  }
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
