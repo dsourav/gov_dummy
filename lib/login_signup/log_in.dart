@@ -211,10 +211,10 @@ class _LoginPageState extends State<LoginPage>
   void initState() {
     super.initState();
 
-    SystemChrome.setPreferredOrientations([
-      DeviceOrientation.portraitUp,
-      DeviceOrientation.portraitDown,
-    ]);
+    // SystemChrome.setPreferredOrientations([
+    //   DeviceOrientation.portraitUp,
+    //   DeviceOrientation.portraitDown,
+    // ]);
     _subscription = Connectivity()
         .onConnectivityChanged
         .listen((ConnectivityResult result) {

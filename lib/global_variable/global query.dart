@@ -131,10 +131,7 @@ String addProductQeury="""mutation productadd(
      
     }
   ){
-    user{
-      id
-      user_name
-    }
+    id
    
   }
   
@@ -142,10 +139,10 @@ String addProductQeury="""mutation productadd(
 
 
 String addProductImagesQuery="""
-mutation productImage(\$image:Upload!){
-  addProductImage(
-    id:"72e31f2d-de71-4b23-a98e-4e0c78937b59"
-    image:\$image
+mutation productImages(\$id: ID!,\$images: [Upload!]){
+  addProductImages(
+    id:\$id
+    images:\$images
   ){
     url
     

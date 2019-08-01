@@ -19,7 +19,6 @@ class _MYProductsState extends State<MYProducts> {
         tooltip: 'Add Product',
         child: new Icon(Icons.add), 
         onPressed: () {
-
           Navigator.of(context).push(new MaterialPageRoute(
           builder: (BuildContext context) =>new AddNEwProduct()
 
