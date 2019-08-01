@@ -4,6 +4,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
 
 var token;
+var userOwnerId;
 
 String signUpQueryMutation=
 """mutation signuprun(\$full_name: String!,
@@ -146,6 +147,34 @@ mutation productImages(\$id: ID!,\$images: [Upload!]){
   ){
     url
     
+  }
+}
+""";
+
+String myProductsListQuery="""
+query myproductslist(\$userId: String){
+  products(
+    userId:\$userId
+    
+  ){
+    edges{
+      id
+      name
+      quantity
+      quantity_extension
+      min_quantity
+      min_quantity_extension
+      price
+      price_extension
+      gov_price
+      gov_price_extension
+      available_now
+      retailable
+      description
+      images{
+        url
+      }
+    }
   }
 }
 """;
