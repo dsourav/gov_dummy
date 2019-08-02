@@ -10,6 +10,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'login_signup/log_in.dart';
 import 'my_product/add_product.dart';
 import 'package:design_demo/global_variable/global query.dart' as globals;
+
+import 'my_product/my_products.dart';
 SharedPreferences sp;
 void main() async{ 
   sp = await SharedPreferences.getInstance();
@@ -56,6 +58,7 @@ class MyApp extends StatelessWidget {
             routes: {
              '/home': (context) => HomePAgeMAin(),
              '/login':(context)=>LoginPage(),
+             '/myproduct':(context)=>MYProducts()
              
             },
             

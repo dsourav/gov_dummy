@@ -71,6 +71,8 @@ class _AddNEwProductState extends State<AddNEwProduct> {
   String _mySelection;
   List<dynamic> _myJson;
    bool _loaderState = false;
+
+   var _polIntervalGetter=null;
   //final _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
@@ -380,7 +382,7 @@ class _AddNEwProductState extends State<AddNEwProduct> {
               );
             },
             options: MutationOptions(document: globals.addProductQeury),
-            update: (Cache cache, QueryResult result) {
+            update: (Cache cache, QueryResult result) async {
               if (result.hasErrors) {
                 //print(result.errors.toString());
                  setState(() {
@@ -391,14 +393,31 @@ class _AddNEwProductState extends State<AddNEwProduct> {
               } else if (result.data != null) {
                 setState(() {
                   _loaderState=false;
+                  _productmaxQtyController.clear();
+                  _productmaxQtyController.clear();
+                  _productPriceController.clear();
+                  _productPriceExtensionController.clear();
+                  _productdesCription.clear();
+                  
                 });
-                showDialog(
-                    context: context,
-                    builder: (_) => new AddProductImages(
-                          productId: result.data['addProduct']['id'],
-                        ),
-                    barrierDismissible: false);
+                //Navigator.of(context).pop();
+
+
+                
+
+                var resultReturn = await showDialog(context: context,barrierDismissible: false,
+                builder: (_)=> AddProductImages( productId: result.data['addProduct']['id'],));
+                // print(resultReturn.toString());
+                // showDialog(
+                //     context: context,
+                //     builder: (_) => new AddProductImages(
+                         
+                //         ),
+                //     );
                 //print();
+                if(resultReturn==true){
+                 // Flushbar(message: "Product added",duration: Duration(seconds: 1),)..show(context);
+                  Navigator.of(context).pop();                }
               } else {
                  setState(() {
                             _loaderState = false;
@@ -413,6 +432,8 @@ class _AddNEwProductState extends State<AddNEwProduct> {
       ),
     );
   }
+
+ 
 
   void _showInSnackBar(String value) {
     FocusScope.of(context).requestFocus(new FocusNode());
