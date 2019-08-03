@@ -14,6 +14,9 @@ class GraphQLObject{
   ValueNotifier<GraphQLClient> client = ValueNotifier(
     GraphQLClient(
       cache: InMemoryCache(),
+      // OptimisticCache(
+      //     dataIdFromObject: typenameDataIdFromObject,
+      //   ),
       link: link,
       
     ),

@@ -13,7 +13,7 @@ class MYProducts extends StatefulWidget {
 class _MYProductsState extends State<MYProducts> {
 
   List<MyProductDetails>_myproductDetailsdata=new List();
-  var _polIntervalGetter=null;
+ 
   @override
   Widget build(BuildContext context) {
 
@@ -37,18 +37,7 @@ class _MYProductsState extends State<MYProducts> {
             List image=singleData['images'];
 
             _myproductDetailsdata.add(new MyProductDetails(
-              id: singleData['id']??null,
-              productName: singleData['name']??null,
-              price: singleData['price']??null,
-              priceExtension: singleData['price_extension']??null,
-              minQuantity: singleData['min_quantity']??null,
-              minQuantityExtension: singleData['min_quantity_extension']??null,
-              quantity: singleData['quantity']??null,
-              quantityExtension: singleData['quantity_extension']??null,
-              productDescription: singleData['description']??null,
-              availableNow: singleData['available_now']??null,
-              retailAble: singleData['retailable']??null,
-              images: image??null
+
               
 
 
@@ -68,10 +57,24 @@ class _MYProductsState extends State<MYProducts> {
               new Icon(Icons.assignment_turned_in),
 
               onTap: (){
+                print(singleData['name']);
+                print(singleData['id']);
                                       Navigator.of(context).push(new MaterialPageRoute(
                           builder: (BuildContext context) =>
                               new MyProductDetailPage(
-                                details: _myproductDetailsdata[index],
+                                              id: singleData['id']??null,
+              productName: singleData['name']??null,
+              price: singleData['price']??null,
+              priceExtension: singleData['price_extension']??null,
+              minQuantity: singleData['min_quantity']??null,
+              minQuantityExtension: singleData['min_quantity_extension']??null,
+              quantity: singleData['quantity']??null,
+              quantityExtension: singleData['quantity_extension']??null,
+              productDescription: singleData['description']??null,
+              availableNow: singleData['available_now']??null,
+              retailAble: singleData['retailable']??null,
+              images: image??null
+                                
                               )));
               },
 
@@ -87,19 +90,14 @@ class _MYProductsState extends State<MYProducts> {
         
       }, options: QueryOptions(
         document: globals.myProductsListQuery,
-        variables: {
-          '\$userId':globals.userOwnerId
+        variables:<String,dynamic> {
+          'userId':globals.userOwnerId.toString()
         },
         pollInterval: null
 
       ),
 
       ),
-
-
-
-
-
 
       floatingActionButton: new FloatingActionButton(
         tooltip: 'Add Product',
@@ -125,7 +123,7 @@ class _MYProductsState extends State<MYProducts> {
     ));
 
     setState(() {
-      _polIntervalGetter=pollIntervalActivator;
+      //_polIntervalGetter=pollIntervalActivator;
     });
 
 
