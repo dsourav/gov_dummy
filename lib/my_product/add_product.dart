@@ -149,23 +149,25 @@ class _AddNEwProductState extends State<AddNEwProduct> {
                   child: Container(
                     child: new Column(
                       children: <Widget>[
-                        DropdownButtonHideUnderline(
-                                                  child: new DropdownButton(
-                            
-                            value: _dropdownProductsNamevalue,
-                            items: _productNames
-                                .map<DropdownMenuItem<String>>((String value) {
-                              return new DropdownMenuItem(
-                                child: new Text(value),
-                                value: value,
-                              );
-                            }).toList(),
-                            onChanged: (value) {
-                              setState(() {
-                                _dropdownProductsNamevalue = value;
-                              });
-                            },
-                          ),
+                         DropdownButtonHideUnderline(
+                                                  child: ButtonTheme(
+                                                    alignedDropdown: true,
+                                                             child: new DropdownButton(
+                              value: _dropdownProductsNamevalue,
+                              items: _productNames
+                                  .map<DropdownMenuItem<String>>((String value) {
+                                return new DropdownMenuItem(
+                                  child: new Text(value),
+                                  value: value,
+                                );
+                              }).toList(),
+                              onChanged: (value) {
+                                setState(() {
+                                  _dropdownProductsNamevalue = value;
+                                });
+                              },
+                            ),
+                                                  ),
                         ),
                         Card(
                           child: new Row(
